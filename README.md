@@ -27,6 +27,14 @@ A collection of side projects inspired by everyday friction and personal interes
 
 > **Evidence boundary:** Based on local source files and development records reviewed on October 19, 2026. “Implemented” means code is present; it does not imply production readiness or successful end-to-end operation. The portfolio cleanup did not rerun every application.
 
+## A month with Codex
+
+I spent September 2026 using Codex. The animation below reconstructs the color pattern in my token-activity screenshot; it is a visual record of usage, not a token-count report or a measure of productivity.
+
+![One month with Codex: animated activity illustration](assets/codex-september.svg)
+
+[Static version](assets/codex-september-static.svg) · [Visual source data](data/codex-activity-visual.json)
+
 ## Project index
 
 | Project | Stack | Focus |

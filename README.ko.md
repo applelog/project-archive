@@ -27,6 +27,14 @@
 
 > 정리 기준: 2026-10-19 로컬 소스와 개발 기록. 아래의 “구현”은 코드가 존재한다는 뜻이며, 실제 서비스 운영이나 모든 기능의 실행 성공을 뜻하지 않습니다. 이번 작업은 공개용 사본 정리이며 전체 앱을 다시 실행한 검증은 아닙니다.
 
+## Codex와 보낸 9월
+
+2026년 9월 한 달 동안 Codex를 사용해 보았습니다. 아래 애니메이션은 첨부한 토큰 활동 화면의 색상 패턴을 재구성한 것입니다. 사용 기록의 시각화이며 정확한 토큰 수나 생산성 지표는 아닙니다.
+
+![One month with Codex: animated activity illustration](assets/codex-september.svg)
+
+[정적 이미지](assets/codex-september-static.svg) · [시각화 데이터](data/codex-activity-visual.json)
+
 ## 프로젝트 한눈에 보기
 
 | 프로젝트 | 주요 기술 | 핵심 시도 |

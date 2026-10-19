@@ -22,3 +22,9 @@ This inventory records dependencies and provenance clues identified during clean
 - **First-party licensing:** Apart from the existing MIT-covered project, license selection remains open.
 
 A service URL in source code does not establish permission to redistribute its content. This repository is a source portfolio with some materials excluded, not a complete runnable distribution.
+
+## Codex activity graphic
+
+The activity colors were sampled from a screenshot supplied by the repository owner. No underlying token totals, account credentials, or API data are included. The SVG layout, animation, and generator were created for this portfolio. It animates once and respects reduced-motion preferences; a separate static SVG is provided.
+
+Design inspiration: [Avi Vashishta's profile](https://github.com/AVIVASHISHTA29/AVIVASHISHTA29) and [animated README article](https://www.avivashishta.com/blog/build-animated-github-profile-readme). The terminal/SVG presentation approach was referenced; their source code and artwork were not copied.
