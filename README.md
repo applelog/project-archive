@@ -8,12 +8,12 @@
 ![Focus](https://img.shields.io/badge/FOCUS-BUILD%20%26%20REFLECT-a371f7?style=for-the-badge)
 ![Status](https://img.shields.io/badge/STATUS-EXPERIMENTAL-d29922?style=for-the-badge)
 
-![Swift](https://img.shields.io/badge/Swift-181717?style=flat-square&logo=swift&logoColor=F05138)
-![Python](https://img.shields.io/badge/Python-181717?style=flat-square&logo=python&logoColor=3776AB)
-![TypeScript](https://img.shields.io/badge/TypeScript-181717?style=flat-square&logo=typescript&logoColor=3178C6)
-![React](https://img.shields.io/badge/React-181717?style=flat-square&logo=react&logoColor=61DAFB)
-![Go](https://img.shields.io/badge/Go-181717?style=flat-square&logo=go&logoColor=00ADD8)
-![C](https://img.shields.io/badge/C-181717?style=flat-square&logo=c&logoColor=A8B9CC)
+![Swift](https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=20232A)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white)
+![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
 
 [Project index](#project-index) · [Implementation notes](#project-notes) · [Reflections](#technical-reflections) · [Attribution](THIRD_PARTY_NOTICES.md)
 

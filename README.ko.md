@@ -8,12 +8,12 @@
 ![Focus](https://img.shields.io/badge/FOCUS-BUILD%20%26%20REFLECT-a371f7?style=for-the-badge)
 ![Status](https://img.shields.io/badge/STATUS-EXPERIMENTAL-d29922?style=for-the-badge)
 
-![Swift](https://img.shields.io/badge/Swift-181717?style=flat-square&logo=swift&logoColor=F05138)
-![Python](https://img.shields.io/badge/Python-181717?style=flat-square&logo=python&logoColor=3776AB)
-![TypeScript](https://img.shields.io/badge/TypeScript-181717?style=flat-square&logo=typescript&logoColor=3178C6)
-![React](https://img.shields.io/badge/React-181717?style=flat-square&logo=react&logoColor=61DAFB)
-![Go](https://img.shields.io/badge/Go-181717?style=flat-square&logo=go&logoColor=00ADD8)
-![C](https://img.shields.io/badge/C-181717?style=flat-square&logo=c&logoColor=A8B9CC)
+![Swift](https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=20232A)
+![Go](https://img.shields.io/badge/Go-00ADD8?style=flat-square&logo=go&logoColor=white)
+![C](https://img.shields.io/badge/C-00599C?style=flat-square&logo=c&logoColor=white)
 
 [프로젝트 인덱스](#프로젝트-한눈에-보기) · [구현과 한계](#프로젝트별-기록) · [기술적 회고](#여러-프로젝트에서-드러난-과제) · [출처와 권리](THIRD_PARTY_NOTICES.md)
 
