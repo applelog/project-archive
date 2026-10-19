@@ -1,15 +1,17 @@
-# 이동권 길찾기
+# Mobility Guide
 
-프로젝트 목적·구현·한계는 [메인 포트폴리오](../../README.md)에 정리했습니다.
+**English** · [한국어](README.ko.md)
 
-## 실행 안내
+See the [main portfolio](../../README.md) for the project's purpose, implementation, limitations, and next steps.
 
-Xcode에서 MobilityGuide.xcodeproj를 연다. Data/network.json은 원본에서 별도로 준비해야 한다.
+## Setup
 
-현재 사본에서 앱 실행·외부 API·기기 동작을 재검증하지 않았습니다. 비밀값, 개인 데이터와 빌드 산출물은 포함하지 않습니다.
+Open MobilityGuide.xcodeproj in Xcode. Supply Data/network.json separately; see docs/PREVIOUS_README.md for the original data preparation notes in Korean.
 
-## 참고
+Application behavior, external APIs, and device integrations were not revalidated during this cleanup. Credentials, personal data, and generated build outputs are excluded.
 
-소스와 tests/ 또는 Tests/가 있는 경우 해당 테스트를 참고하세요. docs/의 기존 계획과 기록은 현재 검증 결과와 구분해야 합니다.
+## Reference
 
-[출처 및 공개 전 확인 사항](../../THIRD_PARTY_NOTICES.md)
+Where present, consult `tests/` or `Tests/`. Historical plans and records under `docs/` remain in their original language and should not be treated as current validation results.
+
+[Third-party materials and outstanding checks](../../THIRD_PARTY_NOTICES.md)

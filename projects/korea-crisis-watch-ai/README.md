@@ -1,15 +1,17 @@
-# 위기 지표 분석 실험
+# Crisis Indicator Experiment
 
-프로젝트 목적·구현·한계는 [메인 포트폴리오](../../README.md)에 정리했습니다.
+**English** · [한국어](README.ko.md)
 
-## 실행 안내
+See the [main portfolio](../../README.md) for the project's purpose, implementation, limitations, and next steps.
 
-npm ci 후 npm run dev. 현재 API 키 연결은 브라우저 구조이므로 실제 키를 넣은 공개 배포는 준비되지 않았다.
+## Setup
 
-현재 사본에서 앱 실행·외부 API·기기 동작을 재검증하지 않았습니다. 비밀값, 개인 데이터와 빌드 산출물은 포함하지 않습니다.
+Run npm ci, then npm run dev. The current browser-side API-key design is not ready for deployment with real credentials.
 
-## 참고
+Application behavior, external APIs, and device integrations were not revalidated during this cleanup. Credentials, personal data, and generated build outputs are excluded.
 
-소스와 tests/ 또는 Tests/가 있는 경우 해당 테스트를 참고하세요. docs/의 기존 계획과 기록은 현재 검증 결과와 구분해야 합니다.
+## Reference
 
-[출처 및 공개 전 확인 사항](../../THIRD_PARTY_NOTICES.md)
+Where present, consult `tests/` or `Tests/`. Historical plans and records under `docs/` remain in their original language and should not be treated as current validation results.
+
+[Third-party materials and outstanding checks](../../THIRD_PARTY_NOTICES.md)

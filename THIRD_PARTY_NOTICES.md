@@ -1,23 +1,24 @@
-# 외부 자료와 공개 전 확인 사항
+# Third-party materials & outstanding checks
 
-이 문서는 확인한 의존성과 출처 단서를 정리한 검토 목록입니다. 모든 외부 자료의 권리 검토를 마쳤다는 뜻은 아닙니다. 패키지 버전은 각 프로젝트의 manifest와 lockfile이 기준입니다.
+This inventory records dependencies and provenance clues identified during cleanup. It is not a completed rights audit. Project manifests and lockfiles are the reference for dependency versions.
 
-| 프로젝트 | 외부 요소 | 현재 처리 / 남은 확인 |
+| Project | External materials | Treatment / outstanding checks |
 |---|---|---|
-| 음악 분리 | Demucs, librosa, Basic Pitch, music21, pedalboard, Gemini, 악보 도구 | 의존성 파일 유지. 음원·생성 결과·모델 가중치 제외. 재배포 시 각 패키지와 모델 조건 확인 필요 |
-| 라디오 | 방송 스트림, 곡 정보 서비스, 앱 아이콘 | 방송 음원 미포함. 스트림 이용 조건 확인 필요. 아이콘 이미지는 출처 확인 전까지 제외 |
-| Dev Desk | Apple 프레임워크, 로컬 도구 기록 | 개인 데이터 제외. 프레임워크 자체를 재배포하지 않음 |
-| 위기 분석 | Google GenAI, React, Recharts, 외부 배너 | 패키지 의존성 유지. 이전 README의 외부 배너 제거. AI 생성 지표는 검증된 통계가 아님 |
-| X Cleaner | X API, Python 및 웹 의존성 | 실제 설정·작업 기록 제외. 테스트의 명백한 가짜 토큰은 테스트 의미 보존을 위해 유지 |
-| 이동권 길찾기 | OpenStreetMap / Geofabrik, 서울시 지형 자료 | 원래 문서의 ODbL 및 출처 표시 유지. 대용량 원본·변환 보행망 제외. 스크린샷은 공개 대상에서 제외 |
-| 나의 불편함 | Bubble Tea, Lip Gloss 및 Go 의존성 | go.mod/go.sum 유지. 패키지 코드는 복사하지 않음 |
-| 시간표 | React, Lucide, Vite 등 | 기존 Kim Kangwoo MIT LICENSE 보존. 패키지 코드는 복사하지 않음 |
-| 게임 | raylib, NeoDunggeunmo 단서가 있는 내장 글꼴, 시스템 글꼴 기반 비트맵 | 두 버전의 font_data.h는 공개 대상에서 보류해 별도 로컬 검토 폴더로 이동. 글꼴 출처·허용 조건 확인 또는 교체 후 복원 필요 |
+| Music Separation | Demucs, librosa, Basic Pitch, music21, pedalboard, Gemini, score tools | Dependency files retained. Audio, generated results, and model weights excluded. Check package and model terms before redistribution. |
+| Radio | Broadcast streams, track metadata services, app icons | No broadcast recordings included. Stream usage terms need review. Icon images withheld pending provenance checks. |
+| Dev Desk | Apple frameworks, local tool records | Personal data excluded; framework binaries not redistributed. |
+| Crisis Indicators | Google GenAI, React, Recharts, external banner | Dependencies retained; historical README banner removed. Model output is not verified statistical data. |
+| X Cleaner | X API, Python and web dependencies | Actual settings and job records excluded. Clearly fake test tokens retained to preserve test behavior. |
+| Mobility Guide | OpenStreetMap / Geofabrik, Seoul terrain data | Existing ODbL/source references preserved in historical documentation. Large source datasets, transformed walking networks, and screenshots excluded. |
+| My Inconveniences | Bubble Tea, Lip Gloss, Go dependencies | go.mod/go.sum retained; dependency source trees not copied. |
+| Timetable Wizard | React, Lucide, Vite, other dependencies | Existing Kim Kangwoo MIT LICENSE preserved; dependency source trees not copied. |
+| Game experiments | raylib, embedded fonts with NeoDunggeunmo provenance clues, system-font-derived bitmaps | Both font_data.h files withheld from the public tree. Verify provenance and permissions, or replace and regenerate before restoring. |
+| Portfolio badges | Shields.io-hosted badge images and technology logos | Loaded remotely by the README. Logos identify the technologies; no ownership or endorsement is claimed. |
 
-## 공개 전에 해결할 항목
+## Outstanding work
 
-- 게임 글꼴: 첫 버전 생성기는 `neodgm.ttf`를, 두 번째는 macOS 시스템 글꼴을 사용한다. 실제 생성 파일의 출처를 확정하고 배포 가능한 글꼴로 재생성해야 한다. 현재 게임 사본은 해당 헤더가 없어 바로 빌드되지 않는다.
-- 라디오 아이콘과 이동권 앱 화면 이미지: 제작·취득 경위 확인 전까지 공개 대상에서 제외했다. 라디오 자산 목록은 남아 있어 빌드 전 아이콘 복원 또는 교체가 필요하다.
-- 본인 코드의 라이선스 선택: 기존 MIT 대상 외에는 아직 결정하지 않았다.
+- **Game fonts:** The first generator references `neodgm.ttf`; the second uses macOS system fonts. Establish the provenance of the generated data and use fonts suitable for redistribution. Missing headers currently prevent building the game snapshots as-is.
+- **Radio icons and Mobility Guide screenshots:** Withheld pending creation/source verification. Radio asset manifests remain, so icons need restoration or replacement before building.
+- **First-party licensing:** Apart from the existing MIT-covered project, license selection remains open.
 
-소스에 외부 서비스 URL이 있다고 해서 해당 콘텐츠의 재배포 권한이 확인된 것은 아니다. 이 저장소는 자료 일부를 제외한 소스 포트폴리오이며, 완전한 실행 패키지가 아니다.
+A service URL in source code does not establish permission to redistribute its content. This repository is a source portfolio with some materials excluded, not a complete runnable distribution.

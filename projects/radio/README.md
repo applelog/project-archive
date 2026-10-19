@@ -1,15 +1,17 @@
-# 한국 라디오
+# Korean Radio
 
-프로젝트 목적·구현·한계는 [메인 포트폴리오](../../README.md)에 정리했습니다.
+**English** · [한국어](README.ko.md)
 
-## 실행 안내
+See the [main portfolio](../../README.md) for the project's purpose, implementation, limitations, and next steps.
 
-Xcode에서 RadioApp.xcodeproj를 연다. 서명과 대상 기기 설정이 필요하다. Swift 테스트 설정에는 로컬 도구 경로 의존성이 있다.
+## Setup
 
-현재 사본에서 앱 실행·외부 API·기기 동작을 재검증하지 않았습니다. 비밀값, 개인 데이터와 빌드 산출물은 포함하지 않습니다.
+Open RadioApp.xcodeproj in Xcode and configure signing and a target device. Icon images are withheld pending source verification; restore or replace those assets before building. Swift test settings also contain local tool-path assumptions.
 
-## 참고
+Application behavior, external APIs, and device integrations were not revalidated during this cleanup. Credentials, personal data, and generated build outputs are excluded.
 
-소스와 tests/ 또는 Tests/가 있는 경우 해당 테스트를 참고하세요. docs/의 기존 계획과 기록은 현재 검증 결과와 구분해야 합니다.
+## Reference
 
-[출처 및 공개 전 확인 사항](../../THIRD_PARTY_NOTICES.md)
+Where present, consult `tests/` or `Tests/`. Historical plans and records under `docs/` remain in their original language and should not be treated as current validation results.
+
+[Third-party materials and outstanding checks](../../THIRD_PARTY_NOTICES.md)
