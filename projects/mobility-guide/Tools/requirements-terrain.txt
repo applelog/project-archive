@@ -1,0 +1,3 @@
+# Install only in conda min; numpy/scipy/pyosmium are already used by this project.
+pyproj==3.5.0
+pyshp==2.4.2

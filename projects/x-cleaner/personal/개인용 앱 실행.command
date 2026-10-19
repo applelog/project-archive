@@ -1,0 +1,6 @@
+#!/bin/zsh
+set -e
+source /opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh
+conda activate min
+cd -- "${0:A:h}"
+python -m x_cleaner gui

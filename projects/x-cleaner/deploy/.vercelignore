@@ -1,0 +1,8 @@
+.env*
+!.env.example
+.npm-cache
+node_modules
+tests
+*.log
+artifacts
+.vercel-user

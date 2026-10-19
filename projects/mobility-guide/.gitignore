@@ -1,0 +1,20 @@
+.env
+.env.*
+!.env.example
+DerivedData/
+.build/
+*.xcuserstate
+xcuserdata/
+*.ipa
+*.dSYM/
+__pycache__/
+*.pyc
+.private/
+# 원본 GIS 내보내기는 대용량이며 XML 메타데이터에 내부 경로가 들어 있습니다.
+*.shp
+*.shx
+*.dbf
+*.prj
+*.sbn
+*.sbx
+*.shp.xml

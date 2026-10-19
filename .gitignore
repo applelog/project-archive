@@ -1,0 +1,36 @@
+# Credentials and local state
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.secrets/
+.private/
+.vercel/
+.vercel-user/
+# Generated files
+.DS_Store
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.build/
+DerivedData/
+dist/
+build/
+.pytest_cache/
+.pytest_tmp/
+.npm-cache/
+xcuserdata/
+*.xcuserstate
+*.log
+*.sqlite*
+uploads/
+outputs/
+jobs/
+archives/
+# Project-specific private or external data
+/projects/dev-desk/data/
+/projects/mobility-guide/Data/network.json
+/projects/school-timetable/timetable-*.json
+**/src/font_data.h

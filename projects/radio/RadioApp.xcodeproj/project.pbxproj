@@ -1,0 +1,390 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10001 /* RadioApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10001 /* RadioApp.swift */; };
+		A10002 /* CarPlaySceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10002 /* CarPlaySceneDelegate.swift */; };
+		A10003 /* RadioNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10003 /* RadioNetwork.swift */; };
+		A10004 /* RadioStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10004 /* RadioStation.swift */; };
+		A10005 /* KoreanStationPresets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10005 /* KoreanStationPresets.swift */; };
+		A10006 /* AutoScanEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10006 /* AutoScanEngine.swift */; };
+		A10007 /* RadioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10007 /* RadioPlayerManager.swift */; };
+		A10008 /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10008 /* HapticManager.swift */; };
+		A10009 /* RadioViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10009 /* RadioViewModel.swift */; };
+		A10010 /* MainRadioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10010 /* MainRadioView.swift */; };
+		A10011 /* NowPlayingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10011 /* NowPlayingCard.swift */; };
+		A10012 /* StationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10012 /* StationListView.swift */; };
+		A10013 /* RetroDisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10013 /* RetroDisplayView.swift */; };
+		A10014 /* FrequencyTunerBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10014 /* FrequencyTunerBar.swift */; };
+		A10015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10015 /* Assets.xcassets */; };
+		A10016 /* RadioActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10016 /* RadioActivityAttributes.swift */; };
+		A10017 /* RadioActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10017 /* RadioActivityManager.swift */; };
+		A10018 /* SongMetadataEnricher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10018 /* SongMetadataEnricher.swift */; };
+		A10019 /* SpotifyLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10019 /* SpotifyLinkManager.swift */; };
+		A10020 /* KoreanRadioOnAirFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10020 /* KoreanRadioOnAirFetcher.swift */; };
+		A10021 /* SongHistoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10021 /* SongHistoryItem.swift */; };
+		A10022 /* SongHistoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10022 /* SongHistoryManager.swift */; };
+		A10023 /* SongHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10023 /* SongHistoryView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B10001 /* RadioApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioApp.swift; sourceTree = "<group>"; };
+		B10002 /* CarPlaySceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarPlaySceneDelegate.swift; sourceTree = "<group>"; };
+		B10003 /* RadioNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioNetwork.swift; sourceTree = "<group>"; };
+		B10004 /* RadioStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioStation.swift; sourceTree = "<group>"; };
+		B10005 /* KoreanStationPresets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanStationPresets.swift; sourceTree = "<group>"; };
+		B10006 /* AutoScanEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoScanEngine.swift; sourceTree = "<group>"; };
+		B10007 /* RadioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayerManager.swift; sourceTree = "<group>"; };
+		B10008 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		B10009 /* RadioViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioViewModel.swift; sourceTree = "<group>"; };
+		B10010 /* MainRadioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainRadioView.swift; sourceTree = "<group>"; };
+		B10011 /* NowPlayingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingCard.swift; sourceTree = "<group>"; };
+		B10012 /* StationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationListView.swift; sourceTree = "<group>"; };
+		B10013 /* RetroDisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetroDisplayView.swift; sourceTree = "<group>"; };
+		B10014 /* FrequencyTunerBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyTunerBar.swift; sourceTree = "<group>"; };
+		B10015 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10016 /* RadioActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioActivityAttributes.swift; sourceTree = "<group>"; };
+		B10017 /* RadioActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioActivityManager.swift; sourceTree = "<group>"; };
+		B10018 /* SongMetadataEnricher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongMetadataEnricher.swift; sourceTree = "<group>"; };
+		B10019 /* SpotifyLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyLinkManager.swift; sourceTree = "<group>"; };
+		B10020 /* KoreanRadioOnAirFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KoreanRadioOnAirFetcher.swift; sourceTree = "<group>"; };
+		B10021 /* SongHistoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHistoryItem.swift; sourceTree = "<group>"; };
+		B10022 /* SongHistoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHistoryManager.swift; sourceTree = "<group>"; };
+		B10023 /* SongHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongHistoryView.swift; sourceTree = "<group>"; };
+		C10001 /* RadioApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RadioApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D10001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E10001 = {
+			isa = PBXGroup;
+			children = (
+				E10002 /* Sources/RadioApp */,
+				B10015 /* Assets.xcassets */,
+				E10003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E10002 /* Sources/RadioApp */ = {
+			isa = PBXGroup;
+			children = (
+				E10004 /* App */,
+				E10005 /* Models */,
+				E10006 /* Services */,
+				E10007 /* ViewModels */,
+				E10008 /* Views */,
+			);
+			path = Sources/RadioApp;
+			sourceTree = "<group>";
+		};
+		E10003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C10001 /* RadioApp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E10004 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B10001 /* RadioApp.swift */,
+				B10002 /* CarPlaySceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E10005 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B10016 /* RadioActivityAttributes.swift */,
+				B10003 /* RadioNetwork.swift */,
+				B10004 /* RadioStation.swift */,
+				B10021 /* SongHistoryItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E10006 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B10005 /* KoreanStationPresets.swift */,
+				B10006 /* AutoScanEngine.swift */,
+				B10017 /* RadioActivityManager.swift */,
+				B10007 /* RadioPlayerManager.swift */,
+				B10018 /* SongMetadataEnricher.swift */,
+				B10019 /* SpotifyLinkManager.swift */,
+				B10020 /* KoreanRadioOnAirFetcher.swift */,
+				B10022 /* SongHistoryManager.swift */,
+				B10008 /* HapticManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E10007 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B10009 /* RadioViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E10008 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B10010 /* MainRadioView.swift */,
+				B10011 /* NowPlayingCard.swift */,
+				B10012 /* StationListView.swift */,
+				B10023 /* SongHistoryView.swift */,
+				E10009 /* Components */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E10009 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				B10013 /* RetroDisplayView.swift */,
+				B10014 /* FrequencyTunerBar.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F10001 /* RadioApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = G10001 /* Build configuration list for PBXNativeTarget "RadioApp" */;
+			buildPhases = (
+				H10001 /* Sources */,
+				D10001 /* Frameworks */,
+				R10001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RadioApp;
+			productName = RadioApp;
+			productReference = C10001 /* RadioApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		I10001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					F10001 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = J10001 /* Build configuration list for PBXProject "RadioApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = E10001;
+			productRefGroup = E10003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F10001 /* RadioApp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		R10001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10015 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		H10001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10001 /* RadioApp.swift in Sources */,
+				A10002 /* CarPlaySceneDelegate.swift in Sources */,
+				A10003 /* RadioNetwork.swift in Sources */,
+				A10004 /* RadioStation.swift in Sources */,
+				A10005 /* KoreanStationPresets.swift in Sources */,
+				A10006 /* AutoScanEngine.swift in Sources */,
+				A10007 /* RadioPlayerManager.swift in Sources */,
+				A10008 /* HapticManager.swift in Sources */,
+				A10009 /* RadioViewModel.swift in Sources */,
+				A10010 /* MainRadioView.swift in Sources */,
+				A10011 /* NowPlayingCard.swift in Sources */,
+				A10012 /* StationListView.swift in Sources */,
+				A10013 /* RetroDisplayView.swift in Sources */,
+				A10014 /* FrequencyTunerBar.swift in Sources */,
+				A10016 /* RadioActivityAttributes.swift in Sources */,
+				A10017 /* RadioActivityManager.swift in Sources */,
+				A10018 /* SongMetadataEnricher.swift in Sources */,
+				A10019 /* SpotifyLinkManager.swift in Sources */,
+				A10020 /* KoreanRadioOnAirFetcher.swift in Sources */,
+				A10021 /* SongHistoryItem.swift in Sources */,
+				A10022 /* SongHistoryManager.swift in Sources */,
+				A10023 /* SongHistoryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		K10001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		K10002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		K10003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7F8M59467C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/RadioApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taemin.RadioApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		K10004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7F8M59467C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sources/RadioApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.taemin.RadioApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		G10001 /* Build configuration list for PBXNativeTarget "RadioApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				K10003 /* Debug */,
+				K10004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		J10001 /* Build configuration list for PBXProject "RadioApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				K10001 /* Debug */,
+				K10002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = I10001 /* Project object */;
+}

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="음악 파일에서 반주와 보컬을 분리하고, 키를 조절하거나 참고용 악보를 만드세요." />
+  <title>음악 스튜디오 · MR 분리와 악보 만들기</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='studio.css') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg class="brand-mark" aria-hidden="true" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v4m5-9v14m5-18v22m5-18v14m5-9v4" /></svg>
+        음악 스튜디오
+      </div>
+      <button class="btn" id="openSettings" type="button" aria-haspopup="dialog">설정</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="intro">
+      <h1>음악 파일로 시작하세요.</h1>
+      <p>반주와 보컬을 분리하거나, 멜로디와 코드 악보를 만드세요.</p>
+    </div>
+
+    <section class="card" aria-label="음악 파일 처리">
+      <div class="mode-tabs" role="group" aria-label="작업 선택">
+        <button class="mode-tab" id="tabMr" type="button" aria-pressed="true" onclick="setMode('mr')">MR 분리</button>
+        <button class="mode-tab" id="tabSheet" type="button" aria-pressed="false" onclick="setMode('sheet')">악보 만들기</button>
+      </div>
+      <div class="section-heading">
+        <h2>음악 파일</h2>
+        <span class="small">최대 500MB</span>
+      </div>
+      <input type="file" id="fileInput" accept=".mp3,.mp4,.wav,.flac,.m4a,.ogg,.aac" hidden />
+      <button class="upload-zone" id="uploadZone" type="button" aria-label="음악 파일 선택" aria-describedby="uploadFormats">
+        <svg class="upload-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V3m-4 4 4-4 4 4M4 15v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4" /></svg>
+        <span class="upload-title">파일을 선택하거나 여기에 놓으세요</span>
+        <span class="upload-sub" id="uploadFormats">MP3, WAV, MP4, M4A, FLAC, OGG, AAC</span>
+      </button>
+      <div class="selected-file" id="selectedFile">
+        <div class="file-info">
+          <p class="file-name" id="fileName"></p>
+          <p class="file-size" id="fileSize"></p>
+        </div>
+        <button class="icon-button" id="fileRemove" type="button" aria-label="선택한 파일 제거">×</button>
+      </div>
+      <p class="hint" id="modeHint">반주와 보컬을 각각 저장하고, 반주의 키를 조절할 수 있습니다.</p>
+
+      <details class="advanced">
+        <summary>추가 옵션</summary>
+        <label class="option-row" id="compressionOption">
+          <input type="checkbox" id="applyCompression" checked />
+          <span>반주 음량 보정<span class="small">컴프레서로 큰 소리를 완화합니다. 곡에 따라 결과가 달라질 수 있습니다.</span></span>
+        </label>
+        <div class="form-group">
+          <label for="calibrationPrompt">악보 보정 요청 <span class="small">선택</span></label>
+          <textarea id="calibrationPrompt" class="form-control" rows="2" placeholder="멜로디를 간결하게 정리해 주세요." aria-describedby="calibrationHint"></textarea>
+          <p class="hint" id="calibrationHint">Gemini API 키를 설정하면 악보 생성 시 요청을 반영합니다.</p>
+        </div>
+      </details>
+
+      <div class="progress-section" id="progressSection" role="status" aria-live="polite">
+        <div class="progress-info"><span id="progressMsg">처리 준비 중…</span><span class="progress-pct" id="progressPct">0%</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+      </div>
+      <div class="error-banner" id="errorBanner" role="alert" hidden></div>
+      <div class="action-row">
+        <button class="btn btn-primary full-width" id="startBtn" type="button" disabled>MR 분리 시작</button>
+        <p class="action-note">곡 길이에 따라 처리에 시간이 걸릴 수 있습니다.</p>
+      </div>
+    </section>
+
+    <section class="card result-section" id="resultSection" aria-labelledby="resultTitle">
+      <div class="result-header"><h2 id="resultTitle">분리 결과</h2><p class="small" id="resultFileName"></p></div>
+      <div class="tracks">
+        <div class="track-card">
+          <h3>반주 <span class="small">MR</span></h3>
+          <audio id="mrAudio" controls preload="none" aria-label="반주 미리듣기"></audio>
+          <div class="btn-row" role="group" aria-label="반주 다운로드">
+            <button class="btn" id="downloadMr" type="button">WAV 저장</button>
+            <button class="btn" id="downloadMrMp3" type="button">MP3 저장</button>
+          </div>
+        </div>
+        <div class="track-card" id="vocalCard">
+          <h3>보컬</h3>
+          <audio id="vocalAudio" controls preload="none" aria-label="보컬 미리듣기"></audio>
+          <div class="btn-row" role="group" aria-label="보컬 다운로드">
+            <button class="btn" id="downloadVocal" type="button">WAV 저장</button>
+            <button class="btn" id="downloadVocalMp3" type="button">MP3 저장</button>
+          </div>
+        </div>
+      </div>
+      <button class="btn full-width sheet-from-vocal" id="makeSheetFromVocal" type="button">이 곡으로 악보 만들기</button>
+      <div class="pitch-control">
+        <div class="pitch-heading">
+          <div><h3>반주 키 조절</h3><p class="small">원래 반주를 기준으로 변경합니다.</p></div>
+          <div class="pitch-display"><output class="pitch-value" id="pitchValue" for="pitchSlider">0</output><span class="small">반음</span></div>
+        </div>
+        <div class="pitch-presets" id="presets" role="group" aria-label="키 빠른 선택">
+          <button class="preset-btn" data-val="-6" type="button" aria-pressed="false">−6</button>
+          <button class="preset-btn" data-val="-4" type="button" aria-pressed="false">−4</button>
+          <button class="preset-btn" data-val="-2" type="button" aria-pressed="false">−2</button>
+          <button class="preset-btn active" data-val="0" type="button" aria-pressed="true">원키</button>
+          <button class="preset-btn" data-val="2" type="button" aria-pressed="false">+2</button>
+          <button class="preset-btn" data-val="4" type="button" aria-pressed="false">+4</button>
+          <button class="preset-btn" data-val="6" type="button" aria-pressed="false">+6</button>
+        </div>
+        <div class="slider-wrap">
+          <input type="range" id="pitchSlider" min="-12" max="12" step="1" value="0" aria-label="반주 키 조절, 반음 단위" />
+          <div class="slider-labels" aria-hidden="true"><span>−12</span><span>−6</span><span>0</span><span>+6</span><span>+12</span></div>
+        </div>
+        <div class="pitch-actions">
+          <span class="small">저장 형식</span>
+          <div class="format-toggle" role="group" aria-label="키 조절 저장 형식">
+            <button class="preset-btn active" id="fmtWav" type="button" aria-pressed="true" onclick="setFmt('wav')">WAV</button>
+            <button class="preset-btn" id="fmtMp3" type="button" aria-pressed="false" onclick="setFmt('mp3')">MP3</button>
+          </div>
+          <button class="btn btn-primary" id="downloadPitch" type="button">이 키로 저장</button>
+        </div>
+        <p class="pitch-status" id="pitchStatus" role="status"></p>
+      </div>
+    </section>
+
+    <section class="card result-section" id="sheetSection" aria-labelledby="sheetTitle">
+      <div class="result-header"><h2 id="sheetTitle">악보 결과</h2><p class="small">멜로디와 코드를 바탕으로 만든 참고용 악보입니다.</p></div>
+      <div class="sheet-progress" id="sheetProgress" role="status" aria-live="polite">
+        <p class="small" id="sheetMsg">악보 생성 중…</p>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="sheetBar"></div></div>
+      </div>
+      <div class="sheet-meta" id="sheetMetaInfo">
+        <div class="sheet-meta-top"><span>조성 <strong id="sheetKey">–</strong></span><span>템포 <strong id="sheetBpm">–</strong></span></div>
+        <p class="sheet-chords">코드 <span id="sheetChords">–</span></p>
+      </div>
+      <div class="sheet-canvas" id="sheetCanvas" role="img" aria-label="멜로디 악보 미리보기"></div>
+      <div class="sheet-pdf-wrap" id="sheetPdfWrap"><iframe id="sheetPdfFrame" title="생성한 악보 PDF"></iframe></div>
+      <div class="sheet-buttons" id="sheetBtns">
+        <div class="btn-row">
+          <button class="btn" id="openPdfTab" type="button">새 탭에서 보기</button>
+          <button class="btn btn-primary" id="downloadSheetPdf" type="button">PDF 저장</button>
+          <button class="btn" id="downloadMidi" type="button">MIDI 저장</button>
+        </div>
+        <p class="hint" id="sheetPreviewHint" hidden>웹 미리보기에는 앞 80개 음표만 표시됩니다.</p>
+        <p class="hint">MIDI는 원본 분석 결과이며, 보정된 악보와 다를 수 있습니다.</p>
+      </div>
+    </section>
+
+    <footer><span>음악 스튜디오</span><span>MR 분리 · 키 조절 · 악보 만들기</span></footer>
+  </main>
+
+  <dialog id="settingsModal" aria-labelledby="settingsTitle" aria-describedby="settingsDescription">
+    <div class="modal-heading"><h2 id="settingsTitle">악보 보정 설정</h2><button class="icon-button" id="closeSettings" type="button" aria-label="설정 닫기">×</button></div>
+    <p class="hint" id="settingsDescription">Gemini를 연결하면 분석한 음표와 코드를 추가로 보정합니다.</p>
+    <div class="form-group">
+      <label for="apiKeyInput">Gemini API 키 <span class="small">선택</span></label>
+      <input type="password" class="form-control" id="apiKeyInput" placeholder="API 키 입력" autocomplete="off" spellcheck="false" aria-describedby="keyStorageHint" />
+      <p class="hint" id="keyStorageHint">키는 이 브라우저에 저장되며, 악보 보정 시 서버로 전송됩니다. 키 없이도 기본 악보를 만들 수 있습니다.</p>
+    </div>
+    <div class="modal-actions"><button class="btn btn-primary" id="saveSettings" type="button">설정 저장</button></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    let currentTaskId = null;
+    let selectedAudioFile = null;
+    let activeFileName = '';
+    let isBusy = false;
+    let toastTimer = null;
+    let pollInterval  = null;
+    let currentMode   = 'mr';    // 'mr' | 'sheet'
+    let sheetPollInterval = null;
+
+    // ── Load Settings ──
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedKey = localStorage.getItem('GEMINI_API_KEY');
+      if (savedKey) document.getElementById('apiKeyInput').value = savedKey;
+    });
+
+    // ── Settings Modal Event Listeners ──
+    document.getElementById('openSettings').addEventListener('click', () => document.getElementById('settingsModal').showModal());
+    document.getElementById('closeSettings').addEventListener('click', () => document.getElementById('settingsModal').close());
+    document.getElementById('saveSettings').addEventListener('click', () => {
+      const key = document.getElementById('apiKeyInput').value.trim();
+      localStorage.setItem('GEMINI_API_KEY', key);
+      document.getElementById('settingsModal').close();
+      showToast('설정이 저장되었습니다!', 'success');
+    });
+
+    // ── 모드 탭 ──
+    function setMode(mode) {
+      if (isBusy) return;
+      currentMode = mode;
+      const isMr = mode === 'mr';
+      document.getElementById('tabMr').setAttribute('aria-pressed', String(isMr));
+      document.getElementById('tabSheet').setAttribute('aria-pressed', String(!isMr));
+      document.getElementById('compressionOption').hidden = !isMr;
+      document.getElementById('modeHint').textContent = isMr
+        ? '반주와 보컬을 각각 저장하고, 반주의 키를 조절할 수 있습니다.'
+        : '멜로디와 코드의 참고용 악보를 PDF 또는 MIDI로 저장할 수 있습니다.';
+      resetBtn();
+    }
+
+    function setBusy(busy) {
+      isBusy = busy;
+      ['tabMr', 'tabSheet', 'uploadZone', 'fileInput', 'fileRemove', 'makeSheetFromVocal', 'downloadPitch',
+       'downloadMr', 'downloadMrMp3', 'downloadVocal', 'downloadVocalMp3', 'downloadMidi', 'downloadSheetPdf', 'openPdfTab']
+        .forEach(id => { document.getElementById(id).disabled = busy; });
+      document.getElementById('startBtn').disabled = busy || !selectedAudioFile;
+    }
+
+    function beginTask() {
+      setBusy(true);
+      document.getElementById('errorBanner').hidden = true;
+      document.getElementById('progressMsg').textContent = '파일 업로드 중…';
+      document.getElementById('progressBar').style.width = '0%';
+      document.getElementById('progressPct').textContent = '0%';
+    }
+
+    function scrollToResult(id) {
+      document.getElementById(id).scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    }
+
+    // ── Upload Zone ──
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput  = document.getElementById('fileInput');
+
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    uploadZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file && !isBusy) handleFile(file);
+    });
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) handleFile(fileInput.files[0]);
+    });
+
+    document.getElementById('fileRemove').addEventListener('click', () => {
+      selectedAudioFile = null;
+      fileInput.value = '';
+      document.getElementById('selectedFile').classList.remove('show');
+      document.getElementById('startBtn').disabled = true;
+    });
+
+    function handleFile(file) {
+      const extension = file.name.split('.').pop().toLowerCase();
+      if (!['mp3', 'mp4', 'wav', 'flac', 'm4a', 'ogg', 'aac'].includes(extension)) {
+        showToast('MP3, WAV 등 지원하는 음악 파일을 선택해 주세요.', 'error');
+        return;
+      }
+      if (file.size > 500 * 1024 * 1024) {
+        showToast('500MB 이하의 파일을 선택해 주세요.', 'error');
+        return;
+      }
+      selectedAudioFile = file;
+      document.getElementById('errorBanner').hidden = true;
+      document.getElementById('fileName').textContent = file.name;
+      document.getElementById('fileSize').textContent = formatSize(file.size);
+      document.getElementById('selectedFile').classList.add('show');
+      document.getElementById('startBtn').disabled = false;
+    }
+
+    function formatSize(bytes) {
+      if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+      return (bytes/(1024*1024)).toFixed(1) + ' MB';
+    }
+
+    // ── Start Button ──
+    document.getElementById('startBtn').addEventListener('click', () => {
+      if (currentMode === 'sheet') startSheetDirect();
+      else startSeparation();
+    });
+
+    async function startSeparation() {
+      const file = selectedAudioFile;
+      if (!file) { showToast('파일을 먼저 선택해주세요.', 'error'); return; }
+
+      beginTask();
+      const btn = document.getElementById('startBtn');
+      btn.disabled = true;
+      btn.textContent = '업로드 중...';
+
+      document.getElementById('progressSection').classList.add('show');
+      document.getElementById('resultSection').classList.remove('show');
+      document.getElementById('sheetSection').classList.remove('show');
+
+      const applyComp = document.getElementById('applyCompression').checked;
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('apply_compression', applyComp ? 'true' : 'false');
+
+      try {
+        const res = await fetch('/upload', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data.error) { showToast(data.error, 'error'); resetBtn(); return; }
+        currentTaskId = data.task_id;
+        activeFileName = file.name;
+        btn.textContent = '처리 중...';
+        startPolling();
+      } catch (e) {
+        showToast('업로드 실패: ' + e.message, 'error');
+        resetBtn();
+      }
+    }
+
+    function startPolling() {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(async () => {
+        if (!currentTaskId) return;
+        try {
+          const res = await fetch(`/status/${currentTaskId}`);
+          const data = await res.json();
+
+          document.getElementById('progressMsg').textContent = data.message || '';
+          const pct = data.progress || 0;
+          document.getElementById('progressBar').style.width = pct + '%';
+          document.getElementById('progressPct').textContent = pct + '%';
+
+          if (data.status === 'done') {
+            clearInterval(pollInterval);
+            onDone(data);
+          } else if (data.status === 'error') {
+            clearInterval(pollInterval);
+            showToast(data.message, 'error');
+            resetBtn();
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }, 1500);
+    }
+
+    function onDone(data) {
+      document.getElementById('progressSection').classList.remove('show');
+      document.getElementById('resultSection').classList.add('show');
+
+      document.getElementById('resultFileName').textContent = activeFileName;
+      slider.value = 0;
+      pitchValue.textContent = '0';
+      updatePresetBtns(0);
+
+      // MR 미리듣기
+      document.getElementById('mrAudio').src = `/preview/${currentTaskId}/mr`;
+
+      // 보컬 미리듣기
+      if (data.vocal_file) {
+        document.getElementById('vocalCard').style.display = 'block';
+        document.getElementById('vocalAudio').src = `/preview/${currentTaskId}/vocal`;
+      } else {
+        document.getElementById('vocalCard').style.display = 'none';
+      }
+
+      resetBtn();
+      showToast('MR 분리 완료!', 'success');
+
+      // 결과 섹션으로 스크롤
+      scrollToResult('resultSection');
+    }
+
+    function resetBtn() {
+      const btn = document.getElementById('startBtn');
+      setBusy(false);
+      btn.textContent = currentMode === 'mr' ? 'MR 분리 시작' : '악보 만들기 시작';
+      document.getElementById('progressSection').classList.remove('show');
+    }
+
+    // ── Download buttons ──
+    let currentFmt = 'wav';
+    function setFmt(fmt) {
+      currentFmt = fmt;
+      document.getElementById('fmtWav').classList.toggle('active', fmt === 'wav');
+      document.getElementById('fmtMp3').classList.toggle('active', fmt === 'mp3');
+      document.getElementById('fmtWav').setAttribute('aria-pressed', String(fmt === 'wav'));
+      document.getElementById('fmtMp3').setAttribute('aria-pressed', String(fmt === 'mp3'));
+    }
+
+    document.getElementById('downloadMr').addEventListener('click', () => {
+      window.location.href = `/download/${currentTaskId}/mr`;
+    });
+    document.getElementById('downloadMrMp3').addEventListener('click', () => {
+      window.location.href = `/download/${currentTaskId}/mr?fmt=mp3`;
+    });
+    document.getElementById('downloadVocal').addEventListener('click', () => {
+      window.location.href = `/download/${currentTaskId}/vocal`;
+    });
+    document.getElementById('downloadVocalMp3').addEventListener('click', () => {
+      window.location.href = `/download/${currentTaskId}/vocal?fmt=mp3`;
+    });
+
+    // ── Pitch Control ──
+    const slider = document.getElementById('pitchSlider');
+    const pitchValue = document.getElementById('pitchValue');
+
+    slider.addEventListener('input', () => {
+      const val = parseInt(slider.value);
+      pitchValue.textContent = val > 0 ? '+' + val : val;
+      updatePresetBtns(val);
+    });
+
+    document.getElementById('presets').addEventListener('click', e => {
+      const btn = e.target.closest('.preset-btn');
+      if (!btn) return;
+      const val = parseInt(btn.dataset.val);
+      slider.value = val;
+      pitchValue.textContent = val > 0 ? '+' + val : val;
+      updatePresetBtns(val);
+    });
+
+    function updatePresetBtns(val) {
+      document.querySelectorAll('#presets .preset-btn').forEach(b => {
+        const active = parseInt(b.dataset.val) === val;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+    }
+
+    document.getElementById('downloadPitch').addEventListener('click', async () => {
+      if (!currentTaskId) return;
+      const semitones = parseInt(slider.value);
+      const statusEl = document.getElementById('pitchStatus');
+      const btn = document.getElementById('downloadPitch');
+      const fmt = currentFmt;
+
+      btn.disabled = true;
+      btn.textContent = '처리 중...';
+      statusEl.textContent = fmt === 'mp3' ? 'MP3로 변환 중...' : '피치를 조절하고 있습니다...';
+
+      try {
+        const res = await fetch(`/pitch/${currentTaskId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ semitones, fmt })
+        });
+
+        if (!res.ok) { const err = await res.json(); throw new Error(err.error); }
+
+        const blob = await res.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const sign = semitones > 0 ? '+' : '';
+        a.download = `MR_key${sign}${semitones}.${fmt}`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        statusEl.textContent = '다운로드 완료!';
+        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+        showToast(`키 ${sign}${semitones} (${fmt.toUpperCase()}) 다운로드 완료!`, 'success');
+      } catch (e) {
+        showToast('오류: ' + e.message, 'error');
+        statusEl.textContent = '';
+      } finally {
+        btn.disabled = isBusy;
+        btn.textContent = '이 키로 저장';
+      }
+    });
+
+    // ── Toast ──
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      msg = msg.replace(/[\p{Extended_Pictographic}\uFE0F]/gu, '').trim();
+      t.textContent = msg;
+      if (type === 'error') {
+        const banner = document.getElementById('errorBanner');
+        banner.textContent = msg;
+        banner.hidden = false;
+      }
+      t.className = 'toast ' + type + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
+    }
+
+    // ── 악보 만들기 (직접 업로드) ──
+    async function startSheetDirect() {
+      const file = selectedAudioFile;
+      if (!file) { showToast('파일을 먼저 선택해주세요.', 'error'); return; }
+      beginTask();
+      const btn = document.getElementById('startBtn');
+      btn.disabled = true;
+      btn.textContent = '업로드 중...';
+      document.getElementById('progressSection').classList.add('show');
+      document.getElementById('sheetSection').classList.remove('show');
+
+      const apiKey = localStorage.getItem('GEMINI_API_KEY') || '';
+      const promptText = document.getElementById('calibrationPrompt').value;
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('calibration_prompt', promptText);
+
+      try {
+        const res = await fetch('/transcribe/direct', { 
+          method: 'POST', 
+          headers: {
+            'X-Gemini-API-Key': apiKey
+          },
+          body: formData 
+        });
+        const data = await res.json();
+        if (data.error) { showToast(data.error, 'error'); resetBtn(); return; }
+        currentTaskId = data.task_id;
+        activeFileName = file.name;
+        btn.textContent = '악보 생성 중...';
+        pollSheet(currentTaskId);
+      } catch (e) {
+        showToast('업로드 실패: ' + e.message, 'error');
+        resetBtn();
+      }
+    }
+
+    // ── 보컬로 악보 만들기 버튼 ──
+    document.getElementById('makeSheetFromVocal').addEventListener('click', async () => {
+      if (!currentTaskId || isBusy) return;
+      beginTask();
+      showToast('보컬 악보 생성을 시작합니다...', 'success');
+      document.getElementById('sheetSection').classList.add('show');
+      document.getElementById('sheetProgress').style.display = 'block';
+      document.getElementById('sheetCanvas').style.display = 'none';
+      document.getElementById('sheetBtns').style.display = 'none';
+      document.getElementById('sheetPdfWrap').style.display = 'none';
+      document.getElementById('sheetMetaInfo').style.display = 'none';
+
+      const apiKey = localStorage.getItem('GEMINI_API_KEY') || '';
+      const promptText = document.getElementById('calibrationPrompt').value;
+
+      try {
+        const res = await fetch(`/transcribe/${currentTaskId}/vocal`, { 
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Gemini-API-Key': apiKey
+          },
+          body: JSON.stringify({ calibration_prompt: promptText })
+        });
+        const data = await res.json();
+        if (data.error) { showToast(data.error, 'error'); document.getElementById('sheetProgress').style.display = 'none'; resetBtn(); return; }
+        pollSheet(currentTaskId);
+        scrollToResult('sheetSection');
+      } catch (e) { showToast('오류: ' + e.message, 'error'); document.getElementById('sheetProgress').style.display = 'none'; resetBtn(); }
+    });
+
+    // ── 악보 생성 폴링 ──
+    function pollSheet(taskId) {
+      if (sheetPollInterval) clearInterval(sheetPollInterval);
+      sheetPollInterval = setInterval(async () => {
+        try {
+          const res = await fetch(`/status/${taskId}`);
+          const data = await res.json();
+          document.getElementById('progressMsg').textContent = data.message || '';
+          document.getElementById('progressBar').style.width = (data.progress || 0) + '%';
+          document.getElementById('progressPct').textContent = (data.progress || 0) + '%';
+          document.getElementById('sheetBar').style.width = (data.progress || 0) + '%';
+          document.getElementById('sheetMsg').textContent = data.message || '';
+          document.getElementById('sheetProgress').style.display = 'block';
+          if (data.status === 'sheet_done') {
+            clearInterval(sheetPollInterval);
+            document.getElementById('progressSection').classList.remove('show');
+            resetBtn();
+            onSheetDone(taskId, data);
+          } else if (data.status === 'error') {
+            clearInterval(sheetPollInterval);
+            document.getElementById('sheetProgress').style.display = 'none';
+            showToast(data.message, 'error');
+            resetBtn();
+          }
+        } catch(e) { console.error(e); }
+      }, 1500);
+    }
+
+    // ── 악보 완료 처리 ──
+    function onSheetDone(taskId, data) {
+      document.getElementById('sheetSection').classList.add('show');
+      document.getElementById('sheetProgress').style.display = 'none';
+      document.getElementById('sheetBtns').style.display = 'block';
+
+      // 악보 메타 정보 업데이트
+      const metaInfo = document.getElementById('sheetMetaInfo');
+      const keyEl = document.getElementById('sheetKey');
+      const bpmEl = document.getElementById('sheetBpm');
+      const chordsEl = document.getElementById('sheetChords');
+
+      if (data.key || data.bpm || (data.chords && data.chords.length)) {
+        metaInfo.style.display = 'block';
+        keyEl.textContent = data.key || 'Auto';
+        bpmEl.textContent = data.bpm ? Math.round(data.bpm) + ' BPM' : '–';
+        if (data.chords && data.chords.length) {
+          const chordSeq = data.chords.map(c => c.chord).filter((v, i, a) => i === 0 || v !== a[i-1]);
+          chordsEl.textContent = chordSeq.slice(0, 16).join(' → ') + (chordSeq.length > 16 ? ' ...' : '');
+        } else {
+          chordsEl.textContent = '–';
+        }
+      } else {
+        metaInfo.style.display = 'none';
+      }
+
+      const pdfBtn = document.getElementById('downloadSheetPdf');
+      const openTabBtn = document.getElementById('openPdfTab');
+      const canvas = document.getElementById('sheetCanvas');
+      const wrap = document.getElementById('sheetPdfWrap');
+
+      document.getElementById('sheetPreviewHint').hidden = !!data.pdf_path;
+      if (data.pdf_path) {
+        // PDF를 iframe으로 인라인 표시
+        const frame = document.getElementById('sheetPdfFrame');
+        frame.src = `/view/${taskId}/pdf`;
+        wrap.style.display = 'block';
+        canvas.style.display = 'none';
+        pdfBtn.style.display = 'inline-flex';
+        pdfBtn.onclick = () => { window.location.href = `/download/${taskId}/pdf`; };
+        pdfBtn.textContent = 'PDF 저장';
+
+        openTabBtn.style.display = 'inline-flex';
+        openTabBtn.onclick = () => { window.open(`/view/${taskId}/pdf`, '_blank'); };
+        showToast('악보 생성 완료 (PDF)!', 'success');
+      } else {
+        wrap.style.display = 'none';
+        canvas.style.display = 'block';
+        renderVexFlow(data.notes);
+        pdfBtn.style.display = 'inline-flex';
+        pdfBtn.onclick = saveSheetAsPdf;
+        pdfBtn.textContent = 'PDF 저장';
+        openTabBtn.style.display = 'none';
+        showToast('악보 생성 완료 (웹 뷰어)!', 'success');
+      }
+      scrollToResult('sheetSection');
+    }
+
+    // ── VexFlow 악보 렌더링 ──
+    function renderVexFlow(notes) {
+      const container = document.getElementById('sheetCanvas');
+      container.innerHTML = '';
+      if (!notes || notes.length === 0) {
+        container.innerHTML = '<p style="color:#666;text-align:center;padding:20px;">음표를 인식하지 못했습니다.</p>';
+        return;
+      }
+      const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = Vex.Flow;
+      const sorted = [...notes].sort((a,b) => a.start - b.start).slice(0, 80);
+      const NOTES_PER_ROW = 8;
+      const rows = [];
+      for (let i = 0; i < sorted.length; i += NOTES_PER_ROW) rows.push(sorted.slice(i, i + NOTES_PER_ROW));
+      const W = Math.max(container.clientWidth - 40, 600);
+      const H = rows.length * 110 + 40;
+      const renderer = new Renderer(container, Renderer.Backends.SVG);
+      renderer.resize(W, H);
+      const ctx = renderer.getContext();
+      const noteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+      rows.forEach((rowNotes, ri) => {
+        const stave = new Stave(10, ri * 110 + 10, W - 20);
+        if (ri === 0) stave.addClef('treble').addTimeSignature('4/4');
+        stave.setContext(ctx).draw();
+        const vexNotes = rowNotes.map(n => {
+          const octave = Math.floor(n.pitch / 12) - 1;
+          const name = noteNames[n.pitch % 12];
+          const isSharp = name.includes('#');
+          const key = (isSharp ? name[0] : name) + '/' + octave;
+          const dur = n.duration >= 3.5 ? 'w' : n.duration >= 1.75 ? 'h' : n.duration >= 0.85 ? 'q' : n.duration >= 0.4 ? '8' : '16';
+          const sn = new StaveNote({ keys: [key], duration: dur });
+          if (isSharp) sn.addModifier(new Accidental('#'));
+          return sn;
+        });
+        try {
+          const voice = new Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
+          voice.addTickables(vexNotes);
+          new Formatter().joinVoices([voice]).format([voice], W - 40);
+          voice.draw(ctx, stave);
+        } catch(e) { console.warn('VexFlow row:', e); }
+      });
+    }
+
+    // ── 브라우저 PDF 저장 ──
+    function saveSheetAsPdf() {
+      const { jsPDF } = window.jspdf;
+      const svg = document.querySelector('#sheetCanvas svg');
+      if (!svg) { showToast('악보가 없습니다.', 'error'); return; }
+      const svgData = new XMLSerializer().serializeToString(svg);
+      const img = new Image();
+      img.onload = () => {
+        const pdf = new jsPDF('l', 'mm', 'a4');
+        const w = pdf.internal.pageSize.getWidth();
+        pdf.addImage(img, 'PNG', 0, 0, w, (img.height / img.width) * w);
+        pdf.save('sheet_music.pdf');
+      };
+      img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgData)));
+    }
+
+    // ── MIDI 다운로드 ──
+    document.getElementById('downloadMidi').addEventListener('click', () => {
+      if (currentTaskId) window.location.href = `/download/${currentTaskId}/midi`;
+    });
+  </script>
+</body>
+</html>
